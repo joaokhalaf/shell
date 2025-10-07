@@ -13,4 +13,10 @@ find $LOG_DIR -name "*.log" -print0 | while IFS= read -r -d '' arquivo; do
     sed -i 's/User credit card last four digits: .*/User credit card last four digits: REDACTED/g' "${arquivo}.filtered"
     sed -i 's/User session initiated with token: .*/User session initiated with token: REDACTED/g' "${arquivo}.filtered"
 
+	sort "${arquivo}.filtered" -o "${arquivo}.filtered"
+
+	uniq "${arquivo}.filtered" > "${arquivo}.uniq"
+
+	num_words=$(wc -w < "${arquivo}.uniq")
+    num_lines=$(wc -l < "${arquivo}.uniq")
 done 
